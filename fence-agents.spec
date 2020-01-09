@@ -16,7 +16,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.0.15
-Release: 13%{?alphatag:.%{alphatag}}%{?dist}
+Release: 13%{?alphatag:.%{alphatag}}%{?dist}.2
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: http://sources.redhat.com/cluster/wiki/
@@ -71,6 +71,7 @@ Patch45: bz1183829-2-fencing-add_list-status.patch
 Patch46: bz1266600-2-fence_ipmilan-add_diag.patch
 Patch47: bz1358064-fence_ipmilan-print_password_to_debug.patch
 Patch48: bz1361623-fencing-status_as_none.patch
+Patch49: bz1506694-fence_rhevm-disable-http-filter.patch
 
 ExclusiveArch: i686 x86_64
 
@@ -161,6 +162,7 @@ BuildRequires: device-mapper-multipath
 %patch46 -p1 -b .bz1266600.2
 %patch47 -p1 -b .bz1358064
 %patch48 -p1 -b .bz1361623
+%patch49 -p1 -b .bz1506694
 
 %build
 ./autogen.sh
@@ -201,6 +203,11 @@ power management for several devices.
 %{_mandir}/man8/fence*
 
 %changelog
+* Fri Nov  3 2017 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.0.15-13.2
+- fence_rhevm: add "--api-path" and "--disable-http-filter" to be
+  able to explicitly use oVirt API version 3
+  Resolves: rhbz#1506694
+
 * Mon Aug 15 2016 Marek Grac <mgrac@redhat.com> - 4.0.15-13
 - fence_ipmilan: Do not print password to debug output
   Resolves: rhbz#1358064
