@@ -16,7 +16,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.0.15
-Release: 12%{?alphatag:.%{alphatag}}%{?dist}
+Release: 13%{?alphatag:.%{alphatag}}%{?dist}
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: http://sources.redhat.com/cluster/wiki/
@@ -69,6 +69,8 @@ Patch43: bz1266600-fence_ipmilan-add_diag.patch
 Patch44: bz1183829-fencing-add_list-status.patch
 Patch45: bz1183829-2-fencing-add_list-status.patch
 Patch46: bz1266600-2-fence_ipmilan-add_diag.patch
+Patch47: bz1358064-fence_ipmilan-print_password_to_debug.patch
+Patch48: bz1361623-fencing-status_as_none.patch
 
 ExclusiveArch: i686 x86_64
 
@@ -157,6 +159,8 @@ BuildRequires: device-mapper-multipath
 %patch44 -p1 -b .bz1183829
 %patch45 -p1 -b .bz1183829.2
 %patch46 -p1 -b .bz1266600.2
+%patch47 -p1 -b .bz1358064
+%patch48 -p1 -b .bz1361623
 
 %build
 ./autogen.sh
@@ -197,6 +201,12 @@ power management for several devices.
 %{_mandir}/man8/fence*
 
 %changelog
+* Mon Aug 15 2016 Marek Grac <mgrac@redhat.com> - 4.0.15-13
+- fence_ipmilan: Do not print password to debug output
+  Resolves: rhbz#1358064
+- fencing: Handle None as status properly
+  Resolves: rhbz#1361623
+
 * Wed Dec 16 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-12
 - fence_ipmilan: Add 'diag' action
   Resolves: rhbz#1266600
