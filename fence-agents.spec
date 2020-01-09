@@ -16,7 +16,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.0.15
-Release: 8%{?alphatag:.%{alphatag}}%{?dist}.2
+Release: 12%{?alphatag:.%{alphatag}}%{?dist}
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: http://sources.redhat.com/cluster/wiki/
@@ -62,7 +62,13 @@ Patch36: bz1256902-fence_ilo-tls_negotiation.patch
 Patch37: bz1247062-fence_rsa-login.patch
 Patch38: bz1254183-1-fence_mpath-reboot_problem.patch
 Patch39: bz1254183-2-fence_mpath-reboot_problem.patch
-Patch40: bz1277072-brocade.patch
+Patch40: bz1274432-brocade.patch 
+Patch41: bz1273632-fence_ipmilan-power_wait_revert.patch
+Patch42: bz1259254-fence_apc-support_for_v6.patch
+Patch43: bz1266600-fence_ipmilan-add_diag.patch
+Patch44: bz1183829-fencing-add_list-status.patch
+Patch45: bz1183829-2-fencing-add_list-status.patch
+Patch46: bz1266600-2-fence_ipmilan-add_diag.patch
 
 ExclusiveArch: i686 x86_64
 
@@ -144,7 +150,13 @@ BuildRequires: device-mapper-multipath
 %patch37 -p1 -b .bz1247062
 %patch38 -p1 -b .bz1254183.1
 %patch39 -p1 -b .bz1254183.2
-%patch40 -p1 -b .bz1277072
+%patch40 -p1 -b .bz1274432
+%patch41 -p1 -b .bz1273632
+%patch42 -p1 -b .bz1259254
+%patch43 -p1 -b .bz1266600
+%patch44 -p1 -b .bz1183829
+%patch45 -p1 -b .bz1183829.2
+%patch46 -p1 -b .bz1266600.2
 
 %build
 ./autogen.sh
@@ -185,11 +197,25 @@ power management for several devices.
 %{_mandir}/man8/fence*
 
 %changelog
-* Mon Nov 02 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-8.2
-- fence_brocade: regression in get_power_status
-  Resolves: rhbz#1277072
+* Wed Dec 16 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-12
+- fence_ipmilan: Add 'diag' action
+  Resolves: rhbz#1266600
 
-* Thu Aug 27 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-8.1
+* Mon Dec 14 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-11
+- fence_ipmilan: Revert power_wait values
+  Resolves: rhbz#1273632
+- fence_apc: Support for firmware 6.x
+  Resolves: rhbz#1259254
+- fence_ipmilan: Add 'diag' action
+  Resolves: rhbz#1266600
+- fencing: Add '-list-status' action
+  Resolves: rhbz#1183829
+
+* Mon Nov 02 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-10
+- fence_brocade: Regression in get_power_status
+  Resolves: rhbz#1274432
+
+* Thu Aug 27 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-9
 - fence_ipmilan no longer understands -i
   Resolves: rhbz#1254046
 - fence_ipmilan no longer understands 'timeout'
