@@ -16,7 +16,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.0.15
-Release: 8%{?alphatag:.%{alphatag}}%{?dist}.1
+Release: 8%{?alphatag:.%{alphatag}}%{?dist}.2
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: http://sources.redhat.com/cluster/wiki/
@@ -62,6 +62,7 @@ Patch36: bz1256902-fence_ilo-tls_negotiation.patch
 Patch37: bz1247062-fence_rsa-login.patch
 Patch38: bz1254183-1-fence_mpath-reboot_problem.patch
 Patch39: bz1254183-2-fence_mpath-reboot_problem.patch
+Patch40: bz1277072-brocade.patch
 
 ExclusiveArch: i686 x86_64
 
@@ -143,6 +144,7 @@ BuildRequires: device-mapper-multipath
 %patch37 -p1 -b .bz1247062
 %patch38 -p1 -b .bz1254183.1
 %patch39 -p1 -b .bz1254183.2
+%patch40 -p1 -b .bz1277072
 
 %build
 ./autogen.sh
@@ -183,6 +185,10 @@ power management for several devices.
 %{_mandir}/man8/fence*
 
 %changelog
+* Mon Nov 02 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-8.2
+- fence_brocade: regression in get_power_status
+  Resolves: rhbz#1277072
+
 * Thu Aug 27 2015 Marek Grac <mgrac@redhat.com> - 4.0.15-8.1
 - fence_ipmilan no longer understands -i
   Resolves: rhbz#1254046
