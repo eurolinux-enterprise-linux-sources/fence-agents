@@ -66,7 +66,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.2.1
-Release: 24%{?alphatag:.%{alphatag}}%{?dist}
+Release: 11%{?alphatag:.%{alphatag}}%{?dist}
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: https://github.com/ClusterLabs/fence-agents
@@ -99,23 +99,6 @@ Patch13: bz1236395-3-fix-version.patch
 Patch14: bz1622229-1-fence_aliyun-list-instance-names.patch
 Patch15: bz1622229-2-fence_aliyun-correct-help-indentation.patch
 Patch16: bz1625164-fence_cisco_ucs-encode-POSTFIELDS.patch
-Patch17: bz1645170-fence_scsi-fix-incorrect-SCSI-key-node-ID-10-or-higher.patch
-Patch18: bz1653700-1-fence_scsi-watchdog-retry-support.patch
-Patch19: bz1653700-2-build-fix-check_used_options.patch
-Patch20: bz1650526-fence_hpblade-fix-log_expect_syntax.patch
-Patch21: bz1350908-fence_vmware_soap-cleanup-sigterm.patch
-Patch22: bz1464933-1-fence_redfish.patch
-Patch23: bz1464933-2-fence_redfish-fail-invalid-cert.patch
-Patch24: bz1608550-fence_dump-validate-all.patch
-Patch25: bz1677023-1-fence_redfish-use-ipport-parameter.patch
-Patch26: bz1677023-2-fence_redfish-ip-parameter-backward-compatibility.patch
-Patch27: bz1670460-fence_rhevm-1-use-UTF8-encoding.patch
-Patch28: bz1402862-fence_rhevm-RHEV-v4-API-support.patch
-Patch29: bz1700544-fence_azure_arm-skip_shutdown.patch
-Patch30: bz1670460-fence_rhevm-2-fix-debug-encoding-issues.patch
-Patch31: bz1709879-fence_mpath-fix-watchdog-hardreboot.patch
-Patch32: bz1713665-fence_redfish-full-redfish-spec-compliance.patch
-Patch33: bz1653700-3-fence_scsi-watchdog-fix-retry-failing-on-first-try.patch
 # bundle patches
 Patch1000: bz1568753-4-fence_gce-bundled-libs.patch
 Patch1001: bz1568753-5-%{oauth2client}-docs-build-fix.patch
@@ -128,7 +111,7 @@ Patch1007: python-%{httplib2}-0.9-cve-2013-2037.patch
 Patch1008: bz1568753-7-%{keyring}-fix-gnome-version-warning.patch
 
 %if 0%{?rhel}
-%global supportedagents amt_ws apc apc_snmp bladecenter brocade cisco_mds cisco_ucs compute drac5 eaton_snmp emerson eps evacuate hpblade ibmblade ifmib ilo ilo_moonshot ilo_mp ilo_ssh intelmodular ipdu ipmilan mpath kdump redfish rhevm rsa rsb sbd scsi vmware_rest vmware_soap wti
+%global supportedagents amt_ws apc apc_snmp bladecenter brocade cisco_mds cisco_ucs compute drac5 eaton_snmp emerson eps evacuate hpblade ibmblade ifmib ilo ilo_moonshot ilo_mp ilo_ssh intelmodular ipdu ipmilan mpath kdump rhevm rsa rsb sbd scsi vmware_rest vmware_soap wti
 %ifarch x86_64
 %global testagents virsh heuristics_ping aliyun aws azure_arm gce
 %endif
@@ -142,7 +125,7 @@ Patch1008: bz1568753-7-%{keyring}-fix-gnome-version-warning.patch
 %global testagents virsh heuristics_ping
 %endif
 
-%global allfenceagents fence-agents-amt-ws fence-agents-apc fence-agents-apc-snmp fence-agents-bladecenter fence-agents-brocade fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-compute fence-agents-drac5 fence-agents-eaton-snmp fence-agents-emerson fence-agents-eps fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-mpath fence-agents-kdump fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sbd fence-agents-scsi fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-wti
+%global allfenceagents fence-agents-amt-ws fence-agents-apc fence-agents-apc-snmp fence-agents-bladecenter fence-agents-brocade fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-compute fence-agents-drac5 fence-agents-eaton-snmp fence-agents-emerson fence-agents-eps fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-mpath fence-agents-kdump fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sbd fence-agents-scsi fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-wti
 %endif
 
 ## Setup/build bits
@@ -182,23 +165,6 @@ BuildRequires:  python-six >= 1.6.1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1 -F1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1 -F1
 
 %ifarch x86_64
 # bundles
@@ -597,7 +563,7 @@ License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 Summary: Fence agent for Azure Resource Manager
 Requires: fence-agents-common >= %{version}-%{release}
-Requires: python-azure-sdk >= 4.0.0
+Requires: python-azure-sdk
 Obsoletes: fence-agents
 %description azure-arm
 The fence-agents-azure-arm package contains a fence agent for Azure instances. 
@@ -948,7 +914,7 @@ Requires: fence-agents-common >= %{version}-%{release}
 Requires: device-mapper-multipath
 Obsoletes: fence-agents
 %description mpath
-The fence-agents-mpath package contains fence agent for SCSI persistent reservation over Device Mapper Multipath
+The fence-agents-mpath package contains fence agent for SCSI persisent reservation over Device Mapper Multipath
 %files mpath
 %defattr(-,root,root,-)
 %{_sbindir}/fence_mpath
@@ -985,20 +951,6 @@ The fence-agents-lpar package contains a fence agent for IBM LPAR devices that a
 %{_sbindir}/fence_lpar
 %{_mandir}/man8/fence_lpar.8*
 %endif
-
-%package redfish
-License: GPLv2+ and LGPLv2+
-Group: System Environment/Base
-Summary: Fence agent for Redfish
-Requires: fence-agents-common >= %{version}-%{release}
-Requires: python-requests
-Obsoletes: fence-agents
-%description redfish
-The fence-agents-redfish package contains a fence agent for Redfish
-%files redfish
-%defattr(-,root,root,-)
-%{_sbindir}/fence_redfish
-%{_mandir}/man8/fence_redfish.8*
 
 %package rhevm
 License: GPLv2+ and LGPLv2+
@@ -1073,11 +1025,11 @@ The fence-agents-sbd package contains fence agent for SBD (storage-based death)
 %package scsi
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
-Summary: Fence agent for SCSI persistent reservations
+Summary: Fence agent for SCSI persisent reservations
 Requires: sg3_utils fence-agents-common >= %{version}-%{release}
 Obsoletes: fence-agents
 %description scsi
-The fence-agents-scsi package contains fence agent for SCSI persistent reservations
+The fence-agents-scsi package contains fence agent for SCSI persisent reservations
 %files scsi
 %defattr(-,root,root,-)
 %{_sbindir}/fence_scsi
@@ -1160,52 +1112,6 @@ The fence-agents-zvm package contains a fence agent for z/VM hypervisors
 %endif
 
 %changelog
-* Thu Jun 13 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-24
-- fence_scsi watchdog: fix failing on first try when using retry
-  Resolves: rhbz#1653700
-
-* Tue May 28 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-22
-- fence_redfish: add header for full Redfish spec compliance
-  Resolves: rhbz#1713665
-
-* Tue May 21 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-21
-- fence_rhevm: fix encoding issues
-  Resolves: rhbz#1670460
-
-* Mon May 20 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-20
-- fence_mpath: fix watchdog hardreboot
-  Resolves: rhbz#1709879
-
-* Tue May 14 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-18
-- fence_rhevm: add RHEV v4 API support and auto-detection
-  Resolves: rhbz#1402862
-- fence_azure_arm: use skip_shutdown feature
-  Resolves: rhbz#1700544
-
-* Thu Feb 21 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-16
-- fence_redfish: use ipport parameter
-  Resolves: rhbz#1677023
-
-* Tue Feb  5 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-15
-- fence_dump: add validate-all action
-  Resolves: rhbz#1608550
-
-* Fri Jan 18 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-14
-- fence_redfish: new fence agent
-  Resolves: rhbz#1464933, rhbz#1631492
-
-* Tue Jan  8 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-13
-- fence_scsi: add watchdog retry support
-  Resolves: rhbz#1653700
-
-* Thu Nov 29 2018 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-12
-- fence_scsi: fix incorrect SCSI-key when node ID is 10 or higher
-  Resolves: rhbz#1645170
-- fence_hpblade: fix log_expect syntax
-  Resolves: rhbz#1650526
-- fence_vmware_soap: cleanup when receiving SIGTERM
-  Resolves: rhbz#1350908
-
 * Tue Sep  4 2018 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-11
 - fence_cisco_ucs: fix missing encode for POSTFIELDS
   Resolves: rhbz#1625164
