@@ -66,7 +66,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.2.1
-Release: 11%{?alphatag:.%{alphatag}}%{?dist}.7
+Release: 11%{?alphatag:.%{alphatag}}%{?dist}.8
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: https://github.com/ClusterLabs/fence-agents
@@ -105,6 +105,8 @@ Patch19: bz1654172-2-build-fix-check_used_options.patch
 Patch20: bz1652115-fence_hpblade-fix-log_expect-syntax.patch
 Patch21: bz1666848-1-fence_redfish.patch
 Patch22: bz1666848-2-fence_redfish-fail-invalid-cert.patch
+Patch23: bz1708547-fence_rhevm-RHEV-v4-API-support.patch
+Patch24: bz1709110-fence_azure_arm-skip_shutdown.patch
 # bundle patches
 Patch1000: bz1568753-4-fence_gce-bundled-libs.patch
 Patch1001: bz1568753-5-%{oauth2client}-docs-build-fix.patch
@@ -177,6 +179,8 @@ BuildRequires:  python-six >= 1.6.1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1 -F2
+%patch24 -p1
 
 %ifarch x86_64
 # bundles
@@ -575,7 +579,7 @@ License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 Summary: Fence agent for Azure Resource Manager
 Requires: fence-agents-common >= %{version}-%{release}
-Requires: python-azure-sdk
+Requires: python-azure-sdk >= 4.0.0
 Obsoletes: fence-agents
 %description azure-arm
 The fence-agents-azure-arm package contains a fence agent for Azure instances. 
@@ -1138,6 +1142,12 @@ The fence-agents-zvm package contains a fence agent for z/VM hypervisors
 %endif
 
 %changelog
+* Thu May 16 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-11.8
+- fence_rhevm: add RHEV v4 API support and auto-detection
+  Resolves: rhbz#1708547
+- fence_azure_arm: use skip_shutdown feature
+  Resolves: rhbz#1709110
+
 * Thu Jan 17 2019 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-11.7
 - fence_redfish: new fence agent
   Resolves: rhbz#1666848
