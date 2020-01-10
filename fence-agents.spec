@@ -66,7 +66,7 @@
 Name: fence-agents
 Summary: Fence Agents for Red Hat Cluster
 Version: 4.2.1
-Release: 11%{?alphatag:.%{alphatag}}%{?dist}
+Release: 11%{?alphatag:.%{alphatag}}%{?dist}.1
 License: GPLv2+ and LGPLv2+
 Group: System Environment/Base
 URL: https://github.com/ClusterLabs/fence-agents
@@ -99,6 +99,7 @@ Patch13: bz1236395-3-fix-version.patch
 Patch14: bz1622229-1-fence_aliyun-list-instance-names.patch
 Patch15: bz1622229-2-fence_aliyun-correct-help-indentation.patch
 Patch16: bz1625164-fence_cisco_ucs-encode-POSTFIELDS.patch
+Patch17: bz1647522-fence_scsi-fix-incorrect-SCSI-key-node-ID-10-or-higher.patch
 # bundle patches
 Patch1000: bz1568753-4-fence_gce-bundled-libs.patch
 Patch1001: bz1568753-5-%{oauth2client}-docs-build-fix.patch
@@ -165,6 +166,7 @@ BuildRequires:  python-six >= 1.6.1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %ifarch x86_64
 # bundles
@@ -1112,6 +1114,10 @@ The fence-agents-zvm package contains a fence agent for z/VM hypervisors
 %endif
 
 %changelog
+* Thu Nov  8 2018 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-11.1
+- fence_scsi: fix incorrect SCSI-key when node ID is 10 or higher
+  Resolves: rhbz#1647522
+
 * Tue Sep  4 2018 Oyvind Albrigtsen <oalbrigt@redhat.com> - 4.2.1-11
 - fence_cisco_ucs: fix missing encode for POSTFIELDS
   Resolves: rhbz#1625164
