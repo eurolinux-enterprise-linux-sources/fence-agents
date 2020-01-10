@@ -1,0 +1,11 @@
+--- a/keyring/backends/Gnome.py	2017-10-11 17:28:14.061370016 -0400
++++ b/keyring/backends/Gnome.py	2017-10-11 17:30:16.426342684 -0400
+@@ -3,6 +3,7 @@
+ try:
+-    from gi import Repository
++    from gi import Repository, require_version
+     if Repository.get_default().enumerate_versions('GnomeKeyring'):
++        require_version('GnomeKeyring', '1.0')
+         from gi.repository import GnomeKeyring
+ except ImportError:
+     pass

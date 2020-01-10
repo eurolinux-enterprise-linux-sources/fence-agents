@@ -1,0 +1,36 @@
+diff -uNr a/agents/Makefile.am b/agents/Makefile.am
+--- a/agents/Makefile.am	2018-06-18 12:14:35.000000000 +0200
++++ b/agents/Makefile.am	2018-06-28 12:50:17.193565151 +0200
+@@ -52,7 +52,7 @@
+ 
+ if BUILD_FENCE_SCSI
+ scsidatadir			= $(CLUSTERDATA)
+-scsidata_SCRIPTS		= scsi/fence_scsi_check scsi/fence_scsi_check_hardreboot
++scsidata_SCRIPTS		= scsi/fence_scsi_check scsi/fence_scsi_check_hardreboot scsi/fence_scsi_check.pl
+ endif
+ 
+ FENCE_TEST_ARGS			= \
+@@ -72,6 +72,9 @@
+ 		-e 's#@clustervarrun@#${CLUSTERVARRUN}#g' \
+ 	> $@
+ 
++scsi/fence_scsi_check.pl: scsi/fence_scsi
++	cp $^ $@
++
+ scsi/fence_scsi_check: scsi/fence_scsi
+ 	cp $^ $@
+ 
+diff -uNr a/agents/scsi/fence_scsi.py b/agents/scsi/fence_scsi.py
+--- a/agents/scsi/fence_scsi.py	2018-06-18 12:14:35.000000000 +0200
++++ b/agents/scsi/fence_scsi.py	2018-06-28 12:34:24.319178921 +0200
+@@ -430,7 +430,9 @@
+ ignored when used with the -k option."
+ 
+ 	#fence_scsi_check
+-	if os.path.basename(sys.argv[0]) == "fence_scsi_check":
++	if os.path.basename(sys.argv[0]) == "fence_scsi_check.pl":
++		sys.exit(scsi_check())
++	elif os.path.basename(sys.argv[0]) == "fence_scsi_check":
+ 		sys.exit(scsi_check())
+ 	elif os.path.basename(sys.argv[0]) == "fence_scsi_check_hardreboot":
+ 		sys.exit(scsi_check(True))

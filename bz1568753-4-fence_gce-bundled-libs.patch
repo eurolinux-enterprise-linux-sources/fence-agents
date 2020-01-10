@@ -1,0 +1,19 @@
+diff -uNr a/agents/gce/fence_gce.py b/agents/gce/fence_gce.py
+--- a/agents/gce/fence_gce.py	2018-07-12 09:54:53.121993715 +0200
++++ b/agents/gce/fence_gce.py	2018-07-12 09:57:42.580699588 +0200
+@@ -15,9 +15,14 @@
+   import urllib2 as urlrequest
+ sys.path.append("@FENCEAGENTSLIBDIR@")
+ 
+-import googleapiclient.discovery
+ from fencing import fail_usage, run_delay, all_opt, atexit_handler, check_input, process_input, show_docs, fence_action
+ 
++try:
++	sys.path.insert(0, '/usr/lib/fence-agents/bundled/gce')
++	import googleapiclient.discovery
++except ImportError:
++        pass
++
+ 
+ METADATA_SERVER = 'http://metadata.google.internal/computeMetadata/v1/'
+ METADATA_HEADERS = {'Metadata-Flavor': 'Google'}
